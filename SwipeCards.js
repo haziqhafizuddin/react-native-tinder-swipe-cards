@@ -9,7 +9,8 @@ import {
     View,
     Animated,
     PanResponder,
-    Image
+    Image,
+    TouchableOpacity,
 } from 'react-native';
 
 import clamp from 'clamp';
@@ -55,6 +56,9 @@ var styles = StyleSheet.create({
 class SwipeCards extends Component {
   constructor(props) {
     super(props);
+
+    this.yupButton = this.yupButton.bind(this)
+    this.nopeButton = this.nopeButton.bind(this)
 
     this.state = {
       pan: new Animated.ValueXY(),
@@ -164,7 +168,29 @@ class SwipeCards extends Component {
   }
 
   renderCard(cardData) {
-    return this.props.renderCard(cardData)
+    return this.props.renderCard({ 
+      ...cardData, 
+      yupButton: this.yupButton, 
+      nopeButton: this.nopeButton 
+    })
+  }
+
+  yupButton() {
+    this.props.cardRemoved
+      ? this.props.cardRemoved(this.props.cards.indexOf(this.state.card))
+      : null;
+    Animated.timing(this.state.pan, {
+      toValue: {x: 1000, y: 0},
+    }).start(this._resetState.bind(this));
+  }
+
+  nopeButton() {
+    this.props.cardRemoved
+      ? this.props.cardRemoved(this.props.cards.indexOf(this.state.card))
+      : null;
+    Animated.timing(this.state.pan, {
+      toValue: {x: -1000, y: 0},
+    }).start(this._resetState.bind(this));
   }
 
   render() {
@@ -228,7 +254,6 @@ class SwipeCards extends Component {
                       : null
                     )
                 }
-
             </View>
     );
   }
