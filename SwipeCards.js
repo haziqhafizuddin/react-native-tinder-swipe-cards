@@ -22,8 +22,6 @@ var SWIPE_THRESHOLD = 120;
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
     yup: {
@@ -192,7 +190,7 @@ class SwipeCards extends Component {
             <View style={this.props.containerStyle}>
                 { this.state.card
                     ? (
-                    <Animated.View style={[this.props.cardStyle, animatedCardstyles]} {...this._panResponder.panHandlers}>
+                    <Animated.View style={[this.props.cardStyle, animatedCardstyles, {flex: 1}]} {...this._panResponder.panHandlers}>
                         {this.renderCard(this.state.card)}
                     </Animated.View>
                 )
@@ -204,7 +202,7 @@ class SwipeCards extends Component {
                   : (
                       this.props.showNope
                       ? (
-                        <Animated.View style={[this.props.nopeStyle, animatedNopeStyles]}>
+                        <Animated.View style={this.props.nopeStyle, animatedNopeStyles}>
                             {this.props.noView
                                 ? this.props.noView
                                 : <Text style={this.props.nopeTextStyle}>{this.props.noText ? this.props.noText : "Nope!"}</Text>
