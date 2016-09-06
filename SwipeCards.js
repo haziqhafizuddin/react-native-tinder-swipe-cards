@@ -171,7 +171,8 @@ class SwipeCards extends Component {
     return this.props.renderCard({ 
       ...cardData, 
       yupButton: this.yupButton, 
-      nopeButton: this.nopeButton 
+      nopeButton: this.nopeButton,
+      navigator: this.props.navigator
     })
   }
 
